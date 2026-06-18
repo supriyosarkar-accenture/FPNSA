@@ -64,7 +64,6 @@ module "event_grid" {
   resource_group_name       = module.resource_group.name
   storage_account_id        = module.storage.id
   destination_function_id   = module.function_app.id
-  servicebus_queue_id       = module.service_bus.queue_id
   location                  = var.location
   project_prefix            = var.project_prefix
   environment               = var.environment
@@ -75,6 +74,7 @@ module "logic_app" {
   resource_group_name = module.resource_group.name
   location            = var.location
   name                = var.logic_app_name
+  workflow_definition = file("${path.root}/../logic-app/workflow.json")
 }
 
 module "key_vault" {

@@ -27,8 +27,3 @@ variable "environment" {
   description = "Deployment environment name."
   type        = string
 }
-
-variable "servicebus_queue_id" {
-  description = "Resource ID of the Service Bus queue for Event Grid delivery."
-  type        = string
-}

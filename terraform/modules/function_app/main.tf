@@ -29,6 +29,7 @@ resource "azurerm_function_app" "this" {
     AzureWebJobsStorage            = var.storage_account_connection_string
     APPINSIGHTS_INSTRUMENTATIONKEY = var.app_insights_instrumentation_key
     ServiceBusConnection           = var.service_bus_connection_string
+    ServiceBusQueueName            = "fileprocessing"
   }
 }
 
