@@ -51,7 +51,7 @@
           }
         },
         "method": "post",
-        "path": "/v1/teams/{teamId}/channels/{channelId}/messages",
+        "path": "/v1/teams/@{encodeURIComponent('[TEAM_ID]')}/channels/@{encodeURIComponent('[CHANNEL_ID]')}/messages",
         "body": {
           "body": "File uploaded: @{body('Parse_Service_Bus_Message')?['blobName']}\nURL: @{body('Parse_Service_Bus_Message')?['blobUrl']}"
         }
@@ -80,7 +80,7 @@
             "toRecipients": [
               {
                 "emailAddress": {
-                  "address": "recipient@example.com"
+                  "address": "[NOTIFICATION_EMAIL]"
                 }
               }
             ]
