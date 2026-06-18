@@ -29,11 +29,13 @@ def main(event: func.EventGridEvent):
         logging.error("ServiceBusConnection is not configured.")
         raise ValueError("ServiceBusConnection is required")
 
-    with ServiceBusClient.from_connection_string(SERVICE_BUS_CONNECTION) as client:
-        sender = client.get_queue_sender(queue_name=SERVICE_BUS_QUEUE_NAME)
-        with sender:
-            message = ServiceBusMessage(json.dumps(message_payload))
-            sender.send_messages(message)
-            logging.info("Published message to Service Bus queue '%s'", SERVICE_BUS_QUEUE_NAME)
-
-    return func.HttpResponse(status_code=200)
+    try:
+        with ServiceBusClient.from_connection_string(SERVICE_BUS_CONNECTION) as client:
+            sender = client.get_queue_sender(queue_name=SERVICE_BUS_QUEUE_NAME)
+            with sender:
+                message = ServiceBusMessage(json.dumps(message_payload))
+                sender.send_messages(message)
+                logging.info("Published message to Service Bus queue '%s'", SERVICE_BUS_QUEUE_NAME)
+    except Exception as e:
+        logging.error("Failed to publish message: %s", str(e))
+        raise
