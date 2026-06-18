@@ -1,4 +1,4 @@
-# Azure File Processing and Notification System
+# File Processing and Notification System on Azure
 
 An event-driven, serverless solution built on Microsoft Azure that automatically processes uploaded files and triggers notifications across multiple channels.
 
