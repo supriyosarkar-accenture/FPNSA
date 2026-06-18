@@ -19,9 +19,7 @@ resource "azurerm_function_app" "this" {
   storage_account_access_key = var.storage_account_access_key
   version                    = "~4"
   site_config {
-    application_stack {
-      python_version = "~3.11"
-    }
+    python_version = "~3.11"
   }
 
   app_settings = {

@@ -6,17 +6,15 @@ resource "azurerm_servicebus_namespace" "this" {
 }
 
 resource "azurerm_servicebus_namespace_authorization_rule" "function_sender" {
-  name                = "function-sender"
-  namespace_name      = azurerm_servicebus_namespace.this.name
-  resource_group_name = var.resource_group_name
-  send                = true
+  name         = "function-sender"
+  namespace_id = azurerm_servicebus_namespace.this.id
+  send         = true
 }
 
 resource "azurerm_servicebus_queue" "this" {
-  name                = var.queue_name
-  resource_group_name = var.resource_group_name
-  namespace_name      = azurerm_servicebus_namespace.this.name
-  enable_partitioning = false
+  name         = var.queue_name
+  namespace_id = azurerm_servicebus_namespace.this.id
+  partitioning_enabled = false
 }
 
 output "namespace_name" {

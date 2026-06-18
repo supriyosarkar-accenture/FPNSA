@@ -3,7 +3,7 @@ resource "azurerm_logic_app_workflow" "this" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  definition = var.workflow_definition
+  workflow_schema = var.workflow_definition
 }
 
 output "name" {

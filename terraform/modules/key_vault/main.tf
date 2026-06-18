@@ -5,7 +5,6 @@ resource "azurerm_key_vault" "this" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = "standard"
   purge_protection_enabled    = false
-  soft_delete_enabled         = true
   soft_delete_retention_days  = 7
   network_acls {
     default_action = "Allow"
