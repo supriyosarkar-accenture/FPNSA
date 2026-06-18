@@ -122,9 +122,9 @@ Logic App
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/azure-file-processing.git
+git clone https://github.com/supriyosarkar-accenture/FPNSA.git
 
-cd azure-file-processing
+cd FPNSA
 ```
 
 ### Authenticate with Azure
@@ -240,20 +240,3 @@ Key metrics:
 
 ---
 
-## Learning Objectives
-
-This project demonstrates:
-
-* Event-driven architecture
-* Azure serverless services
-* Enterprise messaging patterns
-* Workflow orchestration
-* Infrastructure as Code with Terraform
-* CI/CD for Azure workloads
-* Monitoring and observability
-
----
-
-## License
-
-This project is licensed under the MIT License.
