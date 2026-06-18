@@ -79,10 +79,9 @@ Logic App
 ├── assets/
 │   └── architecture.png
 │
-├── terraform/
-│   ├── modules/
-│   ├── environments/
-│   └── main.tf
+├── docs/
+│   ├── deployment-guide.md
+│   └── troubleshooting.md
 │
 ├── function-app/
 │   ├── src/
@@ -97,9 +96,24 @@ Logic App
 │   ├── azure-pipelines.yml
 │   └── github-actions.yml
 │
-├── docs/
-│   ├── deployment-guide.md
-│   └── troubleshooting.md
+├── terraform/
+│   ├── environments/
+│   │   └── dev/
+│   │       ├── backend.tf
+│   │       ├── main.tf
+│   │       ├── outputs.tf
+│   │       ├── terraform.tfvars
+│   │       └── variables.tf
+│   └── modules/
+│       ├── app_insights/
+│       ├── event_grid/
+│       ├── function_app/
+│       ├── key_vault/
+│       ├── logic_app/
+│       ├── monitor/
+│       ├── resource_group/
+│       ├── service_bus/
+│       └── storage_account/
 │
 └── README.md
 ```
