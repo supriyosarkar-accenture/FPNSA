@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2019-05-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": {},
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "When_a_message_is_received_in_a_queue_(peek_lock)": {
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['azureservicebus']['connectionId']"
+          }
+        },
+        "method": "get",
+        "path": "/v2/queues/@{encodeURIComponent('fileprocessing')}/messages",
+        "queries": {
+          "visibilitytimeout": "PT30S",
+          "top": 1
+        }
+      }
+    }
+  },
+  "actions": {
+    "Parse_Service_Bus_Message": {
+      "type": "ParseJson",
+      "inputs": {
+        "content": "@body('When_a_message_is_received_in_a_queue_(peek_lock)')",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "blobUrl": { "type": ["string", "null"] },
+            "blobName": { "type": ["string", "null"] },
+            "eventType": { "type": ["string", "null"] },
+            "data": { "type": ["object", "null"] }
+          }
+        }
+      },
+      "runAfter": {}
+    },
+    "Send_Teams_Notification": {
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['teams']['connectionId']"
+          }
+        },
+        "method": "post",
+        "path": "/v1/teams/{teamId}/channels/{channelId}/messages",
+        "body": {
+          "body": "File uploaded: @{body('Parse_Service_Bus_Message')?['blobName']}\nURL: @{body('Parse_Service_Bus_Message')?['blobUrl']}"
+        }
+      },
+      "runAfter": {
+        "Parse_Service_Bus_Message": ["Succeeded"]
+      }
+    },
+    "Send_Email": {
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['office365']['connectionId']"
+          }
+        },
+        "method": "post",
+        "path": "/v2/Mail/send",
+        "body": {
+          "message": {
+            "subject": "File processed: @{body('Parse_Service_Bus_Message')?['blobName']}",
+            "body": {
+              "contentType": "Text",
+              "content": "A new file was uploaded and processed. URL: @{body('Parse_Service_Bus_Message')?['blobUrl']}"
+            },
+            "toRecipients": [
+              {
+                "emailAddress": {
+                  "address": "recipient@example.com"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "runAfter": {
+        "Parse_Service_Bus_Message": ["Succeeded"]
+      }
+    }
+  },
+  "outputs": {}
+}

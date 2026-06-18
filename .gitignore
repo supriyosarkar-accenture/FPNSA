@@ -1,0 +1,9 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+*.log
+.terraform.lock.hcl
+*.pyc
+__pycache__/
+local.settings.json
+.vscode/

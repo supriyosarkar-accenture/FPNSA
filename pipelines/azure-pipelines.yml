@@ -1,0 +1,30 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.11'
+
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'AzureDevOpsConnection'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        cd terraform
+        terraform init
+        terraform plan -out plan.tfplan
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'AzureDevOpsConnection'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        cd terraform
+        terraform apply -auto-approve plan.tfplan
