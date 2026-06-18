@@ -16,11 +16,13 @@ variable "name" {
 variable "workflow_definition" {
   description = "The definition for the Logic App workflow (JSON encoded as string)."
   type        = string
-  default     = jsonencode({
-    "$schema" = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2019-05-01/workflowdefinition.json#"
-    contentVersion = "1.0.0.0"
-    actions = {}
-    triggers = {}
-    outputs = {}
-  })
+  default     = <<EOF
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2019-05-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "actions": {},
+  "triggers": {},
+  "outputs": {}
+}
+EOF
 }

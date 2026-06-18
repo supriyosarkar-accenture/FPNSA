@@ -32,11 +32,3 @@ resource "azurerm_function_app" "this" {
     ServiceBusQueueName            = "fileprocessing"
   }
 }
-
-output "id" {
-  value = azurerm_function_app.this.id
-}
-
-output "name" {
-  value = azurerm_function_app.this.name
-}
